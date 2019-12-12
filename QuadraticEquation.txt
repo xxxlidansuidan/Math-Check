@@ -1,0 +1,37 @@
+https://www.math-only-math.com/introduction-to-quadratic-equation.html
+
+Introduction to Quadratic Equation: 
+Suppose, in a school students of class IX collect $ 10.50. Each of them contributing the number of cents, 
+which is 5 more than the number of students in the class.
+
+To express the above statement in mathematical language,-----------
+
+Let the number of students in class IX be x. Each students contributes (x + 5) Cents
+Total amount collected from the student = x (x + 5) Cents
+According to the problem, total collection is $ 10.50 or 1050 Cents
+Now from the given question we get,
+*  x(x + 5) = 1050
+⟹ x^2 + 5x = 1050
+⟹ x^2 + 5x - 1050 = 0
+
+Therefore, the equation [x^2 + 5x - 1050 = 0] represents the above statement.
+The equation x^2 + 5x - 1050 = 0 is formed of only one variable (unknown quantity) x.
+Here, the highest power of x is 2 (two). This type of equation is called **Quadratic Equation.
+
+Definition of Quadratic Equation:
+If the highest power of the variable of an equation in one variable is 2, then that equation is called a Quadratic Equation.
+
+Some of the examples of quadratic equations:—
+(i) x^2 = 16
+(ii) (x + 3)(x - 3) + 5 = 0
+(iii) 3z - (8 / z) = 2
+
+To know the highest power of the variable in an equation,
+it becomes, sometimes, necessary to simplify the expression involved in the equation.
+For example,
+The highest power of x in the equation [x^4 + 7x = 35] may appear to be one,
+but on simplification we get 5x^2 - 12x + 140 = 0. So, it is a quadratic equation.
+Again, 4(3x^2 - 7x + 5) = 2(4x^2 - 7x + 4) looks like a quadratic equation, but, it is really a linear equation.
+
+Assuming, x^2 = z the equation x4 - 3x2 + 7 = 0 reduces to z^2 - 3z + 7 = 0, which is a quadratic equation.
+Hence, the equations involving higher powers can be reduced to a quadratic equation by substitution.
