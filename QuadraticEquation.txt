@@ -35,3 +35,26 @@ Again, 4(3x^2 - 7x + 5) = 2(4x^2 - 7x + 4) looks like a quadratic equation, but,
 
 Assuming, x^2 = z the equation x4 - 3x2 + 7 = 0 reduces to z^2 - 3z + 7 = 0, which is a quadratic equation.
 Hence, the equations involving higher powers can be reduced to a quadratic equation by substitution.
+
+<******************************************************************************************************************************>
+
+2. Mike 3 hours more to do a piece of work than Davis. They together complete it in 2 hours.
+
+Let *Davis complete a piece of work in x hours and *Mike complete the same work in (x + 3) hours.
+
+Therefore, in 1 hour *Davis complete [1/x] part of the work and in 1 hour *Mike complete [1/(x + 3)] part of the work.
+
+Hence, in 1 hour they togetherly complete 1/x + 1/(x + 3) of the part.
+
+According to the problem we get,
+                          1/x + 1/(x + 3) = ½ ....................  (i)
+Or,***
+Let Mike complete a piece of work in x hours and Davis complete the same work in (x - 3) hours.
+
+Therefore, in 1 hour Davis complete 1/(x - 3) part of the work. and in 1 hour Mike complete 1/x part of the work
+
+Hence, in 1 hour they togetherly complete 1/(x- 3) + 1/x of the part.
+
+According to the problem we get,
+                          1/(x - 3) + 1/x = ½ ....................  (ii)
+Both of (i) and (ii) are quadratic equations.
