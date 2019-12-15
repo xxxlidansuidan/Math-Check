@@ -1,0 +1,143 @@
+Project Euler – Problem 3
+I am sorry, I haven’t posted anything for a while. I have been busy moving, and is currently without an Internet connection. However I couldn’t keep away any more.
+Problem 3 in Project Euler reads:
+    The prime factors of 13195 are 5, 7, 13 and 29.
+    What is the largest prime factor of the number 600851475143 ?
+Brute forcing:
+Like the first two problems, my first question is; “Can it be brute forced”, and the answer to that is “not really”. I tried with a bang on approach without using any mathematical short cuts. The code would look something like
+	
+/*const long numm = 600851475143;
+long largestFact = 0;
+ 
+for (long i = 2; i < numm; i++) {
+    if (numm % i == 0) { // It is a divisor
+        bool isPrime = true;
+        for (long j = 2; j < i; j++) {
+            if (i % j == 0) {
+                isPrime = false;
+                break;
+            }
+        }
+        if (isPrime) {
+            largestFact = i;
+        }
+  } */
+
+The approach is to check all numbers less than the number we are checking. If the number is a factor (checked by the modulo operator) we check all numbers less than the found factor, to check that there are no factors to that number.
+For many people this is an obviously slow method, and I agree. But I think it is fun to take the head on approach. I don’t have the timing for this approach, since I lost patience and stopped it.
+In order to brute force the problem, we need to use a small trick. Any factor less than the square root of the number we check, will have corresponding factor larger than the square root of the number. So we only need to check up to the square root of the number, and then we can deduct the remaining factors.
+
+Example:
+The number 24, has the factors 2,3, 4, 6, 8 and 12.
+The square root of 24 is approximately 4.8, so we are save to check all numbers up to and including 4.
+
+This gives us 2,3 and 4 as factors. The rest can be deducted as:
+24/2 = 12
+24/3 = 8
+24/4 = 6
+
+So lets code something that utilises the fact that we only need to check all numbers up to the square root when looking for factors.
+	
+/*const long numm = 600851475143;
+long largestFact = 0;
+long[] factors = new long[2];
+ 
+for (long i = 2; i * i < numm; i++) {
+    if (numm % i == 0) { // It is a divisor
+        factors[0] = i;
+        factors[1] = numm / i;
+ 
+        for (int k = 0; k < 2; k++) {
+            bool isPrime = true;
+            for (long j = 2; j * j <  factors[k]; j++) {
+                if (factors[k] % j == 0) {
+                    isPrime = false;
+                    break;
+                 }
+             }
+             if (isPrime && factors[k] > largestFact) {
+                largestFact = factors[k];
+            }
+        }
+    } */
+The first change is that I check if i*i is less than the number, which is equivalent to check up to the square root. So we need a lot fewer iterations. I have created an array to to store the found and the corresponding factor. I then check each of them to check if they are primes.
+
+The result of the code is:
+The largest primefactor of 600851475143 is: 6857
+Solution took: 15,625 ms
+
+Alternative Solution:
+As I started the post by saying, there is an alternative, and faster solution than brute forcing. However, it turned out to work well enough for this problem.
+We can use the Fundamental Theorem of Arithmetic which states:
+Any integer greater than 1 is either a prime number, or can be written as a unique product of prime numbers (ignoring the order).
+
+Example:
+The number 12.
+We start with the smallest prime number (2).
+12/2 = 6, which means that 2 is a prime factor to 12.
+We try again to divide the remainder with 2 again:
+6/2 = 3. Three is a prime number as well, so we now have the complete factorization which is
+Prime factorization of 12 is 2,2,3 and we can check that 223=12.
+
+We make a logical short cut here and realise that we don’t need to find all prime numbers first, we can “just” enumerate through all numbers until we have a complete factorization if we start from below, since all non-prime factors will already be factorized in primes, as a consequence of the proof given in the link to the theorem. Lets write some code shall we.
+
+/*const long numm = 600851475143;
+long newnumm = numm;
+long largestFact = 0;
+int counter = 2;
+while (counter * counter <= newnumm) {
+    if (newnumm % counter == 0) {
+        newnumm = newnumm / counter;
+        largestFact = counter;
+    } else counter++;    
+}
+if (newnumm > largestFact) largestFact = newnumm; // the remainder is a prime number
+} */
+
+We start with 2, and check how many times that number is divisible with the remainder we have. Once 2 is not a divisor to the remainder we increase the counter by one and check 3, 4 and so on. If 4 was a factor to the original number, 2 will be a factor at least twice as well. And then we can go on, until the counter is larger than the square root of the remainder.
+If the remainder is different from one, then the remainder is also a prime factor. However I only need to check if it is larger than the largest factor found, to see if it is interesting. This code executes below measurable time on my computer.
+
+The largest primefactor of 600851475143 is: 6857
+Solution took: 0 ms
+
+Actually we can improve it a bit, by changing:-----
+counter++; ----with---- counter = (counter == 2) ? 3 : counter + 2;
+
+Which is a compressed if construct. If the counter is two, we increase it to 3, otherwise we increase it by 2 so we only check 2 and the odd numbers. It doesn’t really make much of a difference for the execution speed of this problem.
+????---->
+Hi Kristian, this is awesome! 🙂 I have one problem though..
+
+The fact that we only need to check all numbers up to the square root when looking for factors of a number doesn’t seem to apply to the number 28. Its prime factorization is 2, 2, 7. Now the square root of 28 is around 5.29. This means I can only get the 2’s but not the 7 since the algorithm will only check numbers up to 6 (its square root rounded up).
+For higher numbers, the algorithm applies really well though.
+
+Answer ::
+This is a long time ago, so I have probably become somewhat wiser since I wrote it.
+You are right in your argumentation is correct. You can indeed have a prime factor which is larger than the square root. In fact there is infinitely many numbers where that is true.
+However, what I think you are missing is the fact that once you have factored out all prime factors below the square root the remainder will also be a prime factor.
+And we can actually prove that. Suppose we have an integer m = n^2. Where n is a real number. And suppose that we have two prime factors to n called a and b, such that a,b > n
+Then we can write a = n + c and b = n + d where c and d are strictly positive numbers as well. Since the number is equal to the product of all the prime factors we get that m >= a*b (the greater than comes from the fact that there might be more prime factors.
+We can write m >= a*b = (n+c)*(n+d) = n^2 + n*c + n*d + c*d = m + k
+where k = n*c + n*d + c*d > 0. This is a contradiction. And therefore we can conclude that we can have a maximum one prime factor larger than the square root.
+
+So to conclude again. The algorithm factors out all the prime factors below the the square root. If there is a quotient larger than 1 once this is done, then that quotient will be a prime factor as well.
+--------->
+That really cleared it up Kristian. So it is possible to have a maximum of one prime factor larger than the square root. And to find this prime factor (hoping it’s greater than 1), we simply divide the number by all the prime factors that were found less than the square root. Thank you!
+
+/* #include "iostream"
+inline bool isprime(const __int64 number) {
+	static __int64 i;
+	if (!(number % 2)) return false;
+	for (i = 3; i*i <= number; i += 2) {if (!(number % i)) return false;}
+	return true;
+}
+int main() {
+	const __int64 number = 317584931803;
+	__int64 max = 0;
+	for(__int64 i = 3; i*i <= number; i += 2) {
+		if(!(number % i))
+			if(isprime(i))
+				max = i;
+	}
+	std::cout << max;
+	return 0;
+} */
